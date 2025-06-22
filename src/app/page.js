@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import "./landing.css";
+import "../styles/landing.css";
 
 export default function Landing() {
   const router = useRouter();

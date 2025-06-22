@@ -1,17 +1,20 @@
+'use client';
+import { signOut } from 'aws-amplify/auth';
+
 export default function Home() {
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      window.location.reload(); // Optional: resets Authenticator
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
-    <div className="container">
-      <h1>Welcome to News Summary App</h1>
-      <p>Select your interests to get daily email updates.</p>
-      <style jsx>{`
-        .container {
-          padding: 2rem;
-          font-family: sans-serif;
-        }
-        h1 {
-          font-size: 2rem;
-        }
-      `}</style>
+    <div style={{ padding: "2rem", textAlign: "center" }}>
+      <h1>Welcome to Reddit Weekly Digest 🎉</h1>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 }
