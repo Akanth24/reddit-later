@@ -1,7 +1,9 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import SignOut from "@/components/buttons/signout";
 import { getCurrentUser } from "aws-amplify/auth";
-import saveInterests from "@/utils/saveInterests";
+import saveInterests from "@/utils/user/saveInterests";
+import getUserInterests from "@/utils/user/getUserInterests";
 
 const subredditsList = [
   "technology",
@@ -13,24 +15,41 @@ const subredditsList = [
   "programming",
 ];
 
-export default function HomePage() {
+export default function Home() {
   const [selectedSubs, setSelectedSubs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
-  // Get userId on mount
+  /** Fetch Cognito user */
+  const fetchUserSignIn = async () => {
+    try {
+      const user = await getCurrentUser();
+      setUserId(user.userId ?? "");
+      setUserEmail(user.signInDetails.loginId ?? "");
+    } catch (err) {
+      console.error("Fetch user signIn details error:", err);
+    }
+  };
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { username } = await getCurrentUser();
-        setUserId(username);
-      } catch (err) {
-        console.error("Failed to get user:", err);
-      }
-    };
-    fetchUser();
+    fetchUserSignIn();
   }, []);
 
+  //**  any saved interests on first render */
+  const fetchUserInterests = async (userId) => {
+    try {
+      const saved = await getUserInterests(userId);
+      setSelectedSubs(saved);
+    } catch (err) {
+      console.error("Fetching user interests error:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInterests(userId);
+  }, [userId]);
+
+  /* ——— UI helpers ——— */
   const toggleSubreddit = (sub) => {
     if (!sub) return;
     setSelectedSubs((prev) =>
@@ -51,8 +70,7 @@ export default function HomePage() {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const sub = e.dataTransfer.getData("text");
-    toggleSubreddit(sub);
+    toggleSubreddit(e.dataTransfer.getData("text"));
   };
 
   const filteredSuggestions = subredditsList.filter(
@@ -61,24 +79,24 @@ export default function HomePage() {
       !selectedSubs.includes(s)
   );
 
+  /* ——— Save to backend ——— */
   const handleSave = async () => {
-    if (!userId) {
-      alert("User not signed in.");
-      return;
-    }
-
-    const message = await saveInterests(userId, selectedSubs);
-    alert(message);
+    if (!userId) return alert("User not signed in.");
+    const msg = await saveInterests(userId, selectedSubs);
+    alert(msg);
   };
 
   return (
-    <main className="home-container">
-      <div className="signout-wrapper">
-        <SignOut />
+    <div className="home-container">
+      <div className="nav-container">
+        <div className="user-email">Hello !! {userEmail}</div>
+        <div className="signout-wrapper">
+          <SignOut />
+        </div>
       </div>
 
       <h1 className="heading">Welcome to Reddit Later 👋</h1>
-      <p className="subtitle">Choose topics & get weekly summaries</p>
+      <p className="subtitle">Choose topics &amp; get weekly summaries</p>
 
       {/* Glowing Search Bar */}
       <div
@@ -127,13 +145,28 @@ export default function HomePage() {
         Save Preferences
       </button>
 
+      {/* ——— styles unchanged ——— */}
       <style jsx>{`
         .home-container {
-          min-height: 100vh;
+          width: 100%;
+          min-height: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 2rem 1rem 4rem;
+          padding: 2rem 5rem;
+        }
+
+        .nav-container {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .user-email {
+          font-size: 1.2rem;
+          font-weight: 600;
         }
 
         .signout-wrapper {
@@ -246,6 +279,8 @@ export default function HomePage() {
           box-shadow: 0 0 12px #ffffffaa;
         }
       `}</style>
-    </main>
+    </div>
   );
 }
+
+Home.auth = true; // tells _app.js this route needs auth
