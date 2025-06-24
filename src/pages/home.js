@@ -46,6 +46,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if(userId)
     fetchUserInterests(userId);
   }, [userId]);
 
@@ -81,8 +82,8 @@ export default function Home() {
 
   /* ——— Save to backend ——— */
   const handleSave = async () => {
-    if (!userId) return alert("User not signed in.");
-    const msg = await saveInterests(userId, selectedSubs);
+    if (!userId && !userEmail) return alert("User not signed in.");
+    const msg = await saveInterests(userId,userEmail, selectedSubs);
     alert(msg);
   };
 

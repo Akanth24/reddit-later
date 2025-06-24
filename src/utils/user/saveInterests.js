@@ -5,6 +5,7 @@
  * persist Interests to DynamoDB (or any datastore behind that endpoint).
  *
  * @param {string} userId       - The Cognito/Amplify user’s unique ID.
+ * @param {string} userEmail    - The Cognito/Amplify user’s unique email.
  * @param {string[]} interests  - Array of subreddit names (e.g. ['technology', 'worldnews']).
  * @returns {Promise<string>}   - Resolves to a status message for UI feedback.
  *
@@ -15,14 +16,14 @@
  * console.log(msg); // → "Interests saved successfully!"
  */
 
-export default async function saveInterests(userId, interests) {
+export default async function saveInterests(userId, userEmail, interests) {
   try {
     const res = await fetch("/api/user/saveInterests", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId, interests }),
+      body: JSON.stringify({ userId, userEmail, interests }),
     });
 
     const data = await res.json();

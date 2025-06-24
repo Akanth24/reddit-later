@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
   try {
-    const { userId, interests } = req.body;
+    const { userId, userEmail, interests } = req.body;
     if (!userId || !Array.isArray(interests)) {
       return res.status(400).json({ error: "Invalid data" });
     }
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       TableName: config.dynamodb.userInterests,
       Item: {
         user_id: { S: userId },
+        user_email: {S: userEmail},
         interests: { S: JSON.stringify(interests) },
       },
     });
