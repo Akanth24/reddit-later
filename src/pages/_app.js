@@ -46,31 +46,62 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={customTheme}>
-      {skipAuth ? (
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          overflowY: "auto",
+          backgroundColor: "black",
+          color: "white",
+          position: "relative",
+        }}
+      >
         <div
           style={{
+            position: "absolute",
+            inset: 0,
             width: "100vw",
-            height: "100vh",
-            overflowY: "auto",
-            transition: "all 0.3s ease",
+            height: "200vh",
+            transformOrigin: "center",
+            pointerEvents: "none",
+            backgroundImage: `
+          linear-gradient(to right, rgba(255,255,255,0.2) 2px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.2) 2px, transparent 1px)
+        `,
+            backgroundSize: "40px 40px",
+            zIndex: 0,
+            animation: "growShrink 16s ease-in-out infinite",
           }}
-        >
-          <Component {...pageProps} />
-        </div>
-      ) : (
-        <Authenticator>
-          <div
-            style={{
-              width: "100vw",
-              height: "100vh",
-              overflowY: "auto",
-              transition: "all 0.3s ease",
-            }}
-          >
+        />
+
+        {/* --- PAGE CONTENT --- */}
+        <div style={{ position: "relative", zIndex: 1 }}>
+          {skipAuth ? (
             <Component {...pageProps} />
-          </div>
-        </Authenticator>
-      )}
+          ) : (
+            <Authenticator>
+              <Component {...pageProps} />
+            </Authenticator>
+          )}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes growShrink {
+          0% {
+            transform: scale(0.9);
+            opacity: 0.25;
+          }
+          50% {
+            transform: scale(1.15);
+            opacity: 0.55;
+          }
+          100% {
+            transform: scale(0.9);
+            opacity: 0.25;
+          }
+        }
+      `}</style>
     </ThemeProvider>
   );
 }

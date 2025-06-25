@@ -130,7 +130,6 @@ export default function Landing() {
 
       <style jsx>{`
         .landing-container {
-          background-color: #000;
           color: #fff;
           overflow-x: hidden;
           width: "100%";
