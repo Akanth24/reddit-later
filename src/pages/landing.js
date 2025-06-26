@@ -53,9 +53,9 @@ export default function Landing() {
       >
         <h2 className="features-heading">Features</h2>
         <div className="features-list">
-          <div className="feature-item">
+          {/* <div className="feature-item">
             <p>Weekly top Reddit posts, straight to your inbox</p>
-          </div>
+          </div> */}
           <div className="feature-item">
             <p>Choose your favorite topics</p>
           </div>
@@ -218,6 +218,11 @@ export default function Landing() {
           color: #ccc;
           min-width: 250px;
           text-align: center;
+        }
+        .feature-item{
+          flex: 1 1 220px; /* Minimum width, but can grow */
+          max-width: 220px; /* Prevents them from becoming too wide */
+          height: 100px; /* Same height for all blocks */
         }
 
         .how-steps {
