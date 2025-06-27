@@ -9,7 +9,32 @@ dotenv.config({ path: envFilePath });
 const nextConfig = {
   env: {
     APP_ENV: process.env.APP_ENV,
-  }
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "external-preview.redd.it",
+      },
+      {
+        protocol: "https",
+        hostname: "preview.redd.it",
+      },
+      {
+        protocol: "https",
+        hostname: "i.redd.it",
+      },
+      {
+        protocol: "https",
+        hostname: "a.thumbs.redditmedia.com",
+      },
+      {
+        protocol: "https",
+        hostname: "b.thumbs.redditmedia.com",
+      },
+    ],
+  },
 };
 
 console.log(`Environment Variable - APP_ENV: ${process.env.APP_ENV}`);
