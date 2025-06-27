@@ -48,8 +48,8 @@ export default function App({ Component, pageProps }) {
     <ThemeProvider theme={customTheme}>
       <div
         style={{
-          width: "100vw",
-          height: "100vh",
+          width: "100dvw",
+          height: "100dvh",
           overflowY: "auto",
           backgroundColor: "black",
           color: "white",
