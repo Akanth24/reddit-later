@@ -83,7 +83,7 @@ export default function SubredditPicker({ selectedSubs, setSelectedSubs }) {
       {/* Suggestions or loader */}
       {loadingSubs ? (
         <div className="loader-wrapper">
-          <LoadingScreen />
+          <LoadingScreen size={7}/>
         </div>
       ) : (
         <ul className="suggestions">

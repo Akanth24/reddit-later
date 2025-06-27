@@ -44,7 +44,7 @@
 
 const fetchTopPosts = async ({
   subs,
-  limit = 10,
+  limit = 20,
   timeframe = "day",
 } = {}) => {
   // Guard-rail: subs must be a non-empty array

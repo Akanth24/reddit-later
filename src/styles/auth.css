@@ -12,14 +12,13 @@ body,
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Full height for vertical centering */
-  padding: 40px 16px;
+  padding: 0;
   box-sizing: border-box;
 }
 
 [data-amplify-container] {
   background-color: #111 !important;
-  padding: 32px;
-  border-radius: 12px;
+  border-radius: 25px;
   border: 1px solid #333;
   max-width: 500px;
   width: 90%;
@@ -88,4 +87,12 @@ body,
 .amplify-button.amplify-field-group__control.amplify-button--link.amplify-button--small {
   background-color: transparent !important;
   color: #fff !important;
+}
+
+.amplify-tabs__item:hover {
+  color: #fff !important;
+}
+.amplify-tabs__item.amplify-tabs__item--active {
+  background-color: #fff !important;
+  color: #000 !important;
 }

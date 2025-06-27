@@ -10,8 +10,6 @@ export default async function handler(req, res) {
   if (!r.ok) return res.status(r.status).end();
 
   const { data } = await r.json();
-  console.log(data?.children?.[0]?.data);
-
   const posts = data.children.map(({ data: p }) => ({
     id: p.id,
     subreddit: p.subreddit,

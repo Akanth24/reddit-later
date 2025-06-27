@@ -33,11 +33,13 @@ export default function Landing() {
     <div className="landing-container">
       {/* HERO */}
       <div className="hero-section">
-        <h1 className="hero-title">Reddit Later</h1>
-        <p className="hero-tagline">Don't Read it Later!!! – Read it Weekly</p>
-        <p className="hero-description">
+        <div className="hero-title">Reddit Later</div>
+        <div className="hero-tagline">
+          Don&apos;t Read it Later!!! – Read it Weekly
+        </div>
+        <div className="hero-description">
           Get the latest discussion summaries from your favorite topics.
-        </p>
+        </div>
         <button onClick={handleLogin} className="hero-button">
           Login
         </button>
@@ -147,33 +149,35 @@ export default function Landing() {
 
         .hero-title {
           font-size: 3rem;
-          margin-bottom: 20px;
+          margin-bottom: 1.2rem;
         }
 
         .hero-tagline,
         .hero-description {
           font-size: 1.25rem;
           color: #ccc;
+          margin-bottom: 0.5rem;
         }
 
         .hero-description {
           max-width: 800px;
-          margin-bottom: 30px;
+          margin-bottom: 2.4rem;
         }
 
         .hero-button {
-          padding: 12px 24px;
+          padding: 12px 32px;
           font-size: 1rem;
           background-color: white;
           color: black;
           border: none;
-          border-radius: 9999px;
+          border-radius: 25px;
           font-weight: bold;
           cursor: pointer;
         }
 
         .hero-button:hover {
           background-color: #e5e5e5;
+          box-shadow: 0 0 24px rgba(255,255,255,0.8)
         }
 
         .features-section,
@@ -183,7 +187,7 @@ export default function Landing() {
           opacity: 0;
           transform: translateY(50px);
           transition: opacity 0.8s ease, transform 0.8s ease;
-          padding: 80px 20px;
+          padding: 40px 20px;
           max-width: 1000px;
           margin: 0 auto;
         }
@@ -197,13 +201,14 @@ export default function Landing() {
         .how-heading,
         .sneak-heading {
           font-size: 2rem;
-          margin-bottom: 30px;
+          margin-bottom: 2.4rem;
           text-align: center;
         }
 
         .features-list {
+          width: 100%;
           display: flex;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           gap: 20px;
           justify-content: center;
         }
@@ -243,17 +248,81 @@ export default function Landing() {
 
         .footer-text {
           font-size: 0.9rem;
-          color: #999;
+          color: #fff;
           text-align: center;
         }
 
         .footer-link {
-          color: #999;
+          color: #fff;
           text-decoration: underline;
         }
 
         .hidden-section {
           pointer-events: none;
+        }
+
+        @media (max-width: 480px) {
+          .hero-title {
+            font-size: 2rem;
+          }
+
+          .hero-tagline,
+          .hero-description {
+            font-size: 1rem;
+          }
+
+          .hero-description {
+            margin-bottom: 20px;
+            padding: 0 10px;
+          }
+
+          .hero-button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+          }
+
+          .features-list {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .feature-item,
+          .how-step,
+          .screenshot-card {
+            width: 100%;
+            padding: 20px;
+            min-width: unset;
+          }
+
+          .how-steps {
+            flex-direction: column;
+          }
+
+          .features-section,
+          .how-section,
+          .sneak-section,
+          .footer-section {
+            padding: 50px 15px;
+          }
+
+          .features-heading,
+          .how-heading,
+          .sneak-heading {
+            font-size: 1.6rem;
+          }
+
+          .step-title {
+            font-size: 1.2rem;
+          }
+
+          .step-text {
+            font-size: 1rem;
+          }
+
+          .footer-text {
+            font-size: 0.8rem;
+            padding: 0 10px;
+          }
         }
       `}</style>
     </div>
