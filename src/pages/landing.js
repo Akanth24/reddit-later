@@ -105,8 +105,12 @@ export default function Landing() {
       >
         <h2 className="sneak-heading">Sneak Peek</h2>
         <div className="screenshot-card">
-          <p>[ Screenshot or UI Mockup Placeholder ]</p>
-        </div>
+        <img
+          src= "/images/mockup.png"
+          alt="App Screenshot"
+          className="screenshot-image"
+        />
+      </div>
       </div>
 
       {/* FOOTER */}
@@ -323,6 +327,13 @@ export default function Landing() {
             font-size: 0.8rem;
             padding: 0 10px;
           }
+
+          .screenshot-image {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+          }
+
         }
       `}</style>
     </div>
