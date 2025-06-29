@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
@@ -103,11 +104,12 @@ export default function Landing() {
         data-id="sneak"
         ref={(el) => (sectionsRef.current[2] = el)}
       >
-        <h2 className="sneak-heading">Sneak Peek</h2>
+      <h2 className="sneak-heading">Sneak Peek</h2>
         <div className="screenshot-card">
-        <img
+        <Image
           src= "/images/mockup.png"
           alt="App Screenshot"
+          fill
           className="screenshot-image"
         />
       </div>
@@ -248,6 +250,8 @@ export default function Landing() {
 
         .screenshot-card {
           font-size: 1.2rem;
+          position: relative;
+          height: 380px;
         }
 
         .footer-text {
@@ -263,6 +267,10 @@ export default function Landing() {
 
         .hidden-section {
           pointer-events: none;
+        }
+
+        .screenshot-image {
+          object-fit: contain;
         }
 
         @media (max-width: 480px) {
@@ -328,11 +336,7 @@ export default function Landing() {
             padding: 0 10px;
           }
 
-          .screenshot-image {
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
-          }
+          
 
         }
       `}</style>
