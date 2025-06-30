@@ -51,12 +51,12 @@ export default async function handler(req, res) {
 /* ---------- helpers ---------- */
  
 async function getRedditToken() {
-  console.log('CLIENT_ID',process.env.REDDIT_CLIENT_ID);
+  console.log('CLIENT_ID',process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID);
   console.log('region',process.env.AWS_REGION);
-  console.log('CLIENT_SECRET',process.env.REDDIT_CLIENT_SECRET);
+  console.log('CLIENT_SECRET',process.env.NEXT_PUBLIC_REDDIT_CLIENT_SECRET);
   
   const creds = Buffer
-    .from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`)
+    .from(`${process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID}:${process.env.NEXT_PUBLIC_REDDIT_CLIENT_SECRET}`)
     .toString("base64");
 
   const res = await fetch("https://www.reddit.com/api/v1/access_token", {
