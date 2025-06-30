@@ -1,12 +1,7 @@
+// lib/dynamodbClient.js
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-/** A singleton DynamoDB client shared across the app. */
-const dynamoClient = new DynamoDBClient({
-  region: process.env.REGION,
-  credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  },
+export const dynamo = new DynamoDBClient({
+  region: process.env.AWS_REGION ?? "ap-south-1",   // fallback for local dev
+  // credentials: leave empty → SDK uses Lambda’s role
 });
-
-export default dynamoClient;
