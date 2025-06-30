@@ -68,7 +68,7 @@ export default function Home() {
         <div className="home-container">
           {/* ── NAV ─────────────────────────────── */}
           <header className="nav-container">
-            <span className="user-email">Hello {userEmail}</span>
+            <span className="user-email">Holaa !! {userEmail?.split('@')?.[0]}</span>
             <SignOut />
           </header>
 

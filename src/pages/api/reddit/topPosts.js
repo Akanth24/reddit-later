@@ -36,10 +36,6 @@ export default async function handler(req, res) {
 }
 
 async function getRedditToken() {
-  console.log('CLIENT_ID',process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID);
-  console.log('region',process.env.AWS_REGION);
-  console.log('CLIENT_SECRET',process.env.NEXT_PUBLIC_REDDIT_CLIENT_SECRET);
-  
   const creds = Buffer
     .from(`${process.env.NEXT_PUBLIC_REDDIT_CLIENT_ID}:${process.env.NEXT_PUBLIC_REDDIT_CLIENT_SECRET}`)
     .toString("base64");
