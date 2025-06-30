@@ -14,6 +14,8 @@ export default async function handler(req, res) {
     headers: {
       Authorization: `Bearer ${token}`,
       "User-Agent": "RedditWeeklyDigestBot/1.0",
+      "Accept": "application/json",
+
     },
   });
   if (!r.ok) return res.status(r.status).end();

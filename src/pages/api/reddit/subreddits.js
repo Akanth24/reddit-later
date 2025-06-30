@@ -56,6 +56,8 @@ async function fetchRedditJson(token, url) {
   const headers = {
     Authorization: `Bearer ${token}`,
     "User-Agent": "RedditWeeklyDigestBot/1.0",
+    "Accept": "application/json",
+
   };
 
   for (let attempt = 1; attempt <= 2; attempt++) {
