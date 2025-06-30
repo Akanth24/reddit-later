@@ -1,4 +1,4 @@
-async function getRedditToken() {
+export async function getRedditToken() {
   const res = await fetch("https://www.reddit.com/api/v1/access_token", {
     method: "POST",
     headers: {
