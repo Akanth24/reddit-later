@@ -1,9 +1,10 @@
 export async function getRedditToken() {
-  console.log('CLIENT_ID',process.env.CLIENT_ID);
-  console.log('CLIENT_SECRET',process.env.CLIENT_SECRET);
+  console.log('CLIENT_ID',process.env.REDDIT_CLIENT_ID);
+  console.log('region',process.env.AWS_REGION);
+  console.log('CLIENT_SECRET',process.env.REDDIT_CLIENT_SECRET);
   
   const creds = Buffer
-    .from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`)
+    .from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`)
     .toString("base64");
 
   const res = await fetch("https://www.reddit.com/api/v1/access_token", {
@@ -11,9 +12,8 @@ export async function getRedditToken() {
     headers: {
       Authorization: `Basic ${creds}`,
       "Content-Type": "application/x-www-form-urlencoded",
-      "User-Agent": "script:reddit-weekly:v1.0", 
     },
-    body: "grant_type=client_credentials&scope=read",
+    body: "grant_type=client_credentials",
   });
 
   if (!res.ok) {
