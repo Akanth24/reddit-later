@@ -12,8 +12,9 @@ export async function getRedditToken() {
     headers: {
       Authorization: `Basic ${creds}`,
       "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "web:read-it-later:v1.0"
     },
-    body: "grant_type=client_credentials",
+    body: "grant_type=client_credentials&scope=read",
   });
 
   if (!res.ok) {
