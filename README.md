@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Reddit Later 
 
-## Getting Started
+Reddit Later is a serverless web application that sends you a personalized weekly digest of top Reddit posts from your favorite subreddits — every Monday. It's built to save time, cut out noise, and keep you informed.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Choose your favorite subreddits
+- Get a weekly email every Monday with top 5 posts
+- Posts are summarized using Amazon Bedrock (GenAI)
+- Preferences stored securely in DynamoDB
+- Fully serverless architecture using AWS
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+##  How It Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **User selects subreddits and provides email** via the web app (built in Next.js).
+2. **Preferences are saved** in a DynamoDB table.
+3. **Every Monday**, an Amazon EventBridge rule triggers an AWS Lambda function.
+4. The Lambda function:
+   - Fetches top posts from selected subreddits using the Reddit API
+   - Summarizes the posts using Amazon Bedrock (foundation models)
+   - Formats the content into an email
+   - Sends the digest using AWS SES
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ⚙️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Layer        | Technology            |
+|--------------|------------------------|
+| Frontend     | Next.js                |
+| Database     | AWS DynamoDB           |
+| Scheduler    | Amazon EventBridge     |
+| Backend      | AWS Lambda             |
+| Summarization| Amazon Bedrock         |
+| Email        | AWS SES                |
+| External API | Reddit API             |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No DOOMSCROLLING ANYMORE!!!
