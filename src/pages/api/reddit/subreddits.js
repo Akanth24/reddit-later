@@ -57,11 +57,12 @@ async function fetchRedditJson(token, url) {
     Authorization: `Bearer ${token}`,
     "User-Agent": "RedditWeeklyDigestBot/1.0",
     "Accept": "application/json",
-
   };
 
   for (let attempt = 1; attempt <= 2; attempt++) {
     const res = await fetch(url, { headers });
+      console.log("response reddits",res)
+
     const type = res.headers.get("content-type") || "";
 
     /* success path */

@@ -15,11 +15,10 @@ export default async function handler(req, res) {
       Authorization: `Bearer ${token}`,
       "User-Agent": "RedditWeeklyDigestBot/1.0",
       "Accept": "application/json",
-
     },
   });
+  console.log("response TOP POSTS",r)
   if (!r.ok) return res.status(r.status).end();
-
   const { data } = await r.json();
   const posts = data.children.map(({ data: p }) => ({
     id: p.id,
