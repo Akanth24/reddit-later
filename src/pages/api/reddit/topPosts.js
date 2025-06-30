@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const token = await getRedditToken();
 
   // “r/a+b+c” syntax fetches from multiple subs in one hit
-  const url = `https://www.reddit.com/r/${subs}/top.json?sort=top&t=${timeframe}&limit=${limit}`;
+  const url = `https://oauth.reddit.com/r/${subs}/top.json?sort=top&t=${timeframe}&limit=${limit}`;
 
   const r = await fetch(url, {
     headers: {

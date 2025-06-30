@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     /* ---------- loop over Reddit pages ---------- */
     do {
       const url =
-        `https://www.reddit.com/subreddits/popular.json` +
+        `https://oauth.reddit.com/subreddits/popular.json` +
         `?limit=100${after ? `&after=${after}` : ""}&raw_json=1`;
 
       const { data } = await fetchRedditJson(token, url);
