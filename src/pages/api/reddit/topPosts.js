@@ -1,12 +1,21 @@
+import { getRedditToken } from "@/utils/reddit/redditAPIHelper";
+
 export default async function handler(req, res) {
   const { subs = "", limit = 15, timeframe = "day" } = req.query;
   if (!subs)
     return res.status(400).json({ error: "query param “subs” missing" });
 
+  const token = await getRedditToken();
+
   // “r/a+b+c” syntax fetches from multiple subs in one hit
   const url = `https://www.reddit.com/r/${subs}/top.json?sort=top&t=${timeframe}&limit=${limit}`;
 
-  const r = await fetch(url, { headers: { "User-Agent": "nextjs-app/1.0" } });
+  const r = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "User-Agent": "RedditWeeklyDigestBot/1.0",
+    },
+  });
   if (!r.ok) return res.status(r.status).end();
 
   const { data } = await r.json();

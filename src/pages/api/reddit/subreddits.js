@@ -7,16 +7,17 @@
  * Returns: { subreddits: [...], pagesFetched: n }
  */
 
+import { getRedditToken } from "@/utils/reddit/redditAPIHelper";
+
 export default async function handler(req, res) {
-  const MAX_PAGES = 10;      // Reddit caps at 1 000 subs (10 × 100)
-  const pagesRequested = Math.min(
-    Number(req.query.pages) || 3,
-    MAX_PAGES
-  );
+  const MAX_PAGES = 10; // Reddit caps at 1 000 subs (10 × 100)
+  const pagesRequested = Math.min(Number(req.query.pages) || 3, MAX_PAGES);
 
   const subreddits = [];
   let after = null;
-  let page  = 0;
+  let page = 0;
+
+  const token = await getRedditToken();
 
   try {
     /* ---------- loop over Reddit pages ---------- */
@@ -25,18 +26,18 @@ export default async function handler(req, res) {
         `https://www.reddit.com/subreddits/popular.json` +
         `?limit=100${after ? `&after=${after}` : ""}&raw_json=1`;
 
-      const { data } = await fetchRedditJson(url);
+      const { data } = await fetchRedditJson(token, url);
       after = data.after;
       page++;
 
       data.children.forEach(({ data: s }) => {
         subreddits.push({
-          name:             s.display_name.toLowerCase(),
-          title:            s.title ?? "-",
-          subscriber_count:  s.subscribers ?? 0,
-          icon_img:          s.icon_img ?? "",
-          over18:           !!s.over18,
-          created_utc:       s.created_utc,
+          name: s.display_name.toLowerCase(),
+          title: s.title ?? "-",
+          subscriber_count: s.subscribers ?? 0,
+          icon_img: s.icon_img ?? "",
+          over18: !!s.over18,
+          created_utc: s.created_utc,
         });
       });
     } while (after && page < pagesRequested);
@@ -51,14 +52,10 @@ export default async function handler(req, res) {
 
 /* ---------- helpers ---------- */
 
-async function fetchRedditJson(url) {
+async function fetchRedditJson(token, url) {
   const headers = {
-    // Pretend to be a real browser; Reddit blocks generic bots
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
-      "AppleWebKit/537.36 (KHTML, like Gecko) " +
-      "Chrome/122.0.0.0 Safari/537.36",
-    Accept: "application/json",
+    Authorization: `Bearer ${token}`,
+    "User-Agent": "RedditWeeklyDigestBot/1.0",
   };
 
   for (let attempt = 1; attempt <= 2; attempt++) {
@@ -72,9 +69,7 @@ async function fetchRedditJson(url) {
     console.warn(`Attempt ${attempt} → status ${res.status}`);
     if (attempt === 2) {
       const body = await res.text();
-      throw new Error(
-        `Reddit non-JSON ${res.status}: ${body.slice(0, 160)}…`
-      );
+      throw new Error(`Reddit non-JSON ${res.status}: ${body.slice(0, 160)}…`);
     }
     await new Promise((r) => setTimeout(r, 1000));
   }
